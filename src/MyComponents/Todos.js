@@ -1,30 +1,30 @@
 import React from 'react'
-import {TodoItem} from './TodoItem';
+import { TodoItem } from './TodoItem'
 
-// List of all todos
-export const Todos = (props) => {
-  // Scrollable container for long lists
-  let style = {
+// Container component that shows the list of todos
+export function Todos(props) {
+  // Style for scrollable list container
+  const style = {
     height: "44vh",
     overflowY: 'scroll'
-  };
+  }
 
   return (
     <div className='container' style={style}>
       <h2 className='my-3'>Todos List</h2>
-      {props.todos.length === 0 ? 
-        "No tasks yet!" :
-        props.todos.map((todo) => {
-          return (
-            <TodoItem 
-              todo={todo} 
-              key={todo.sno} 
-              onDelete={props.onDelete}
-              onToggle={props.onToggle}
-            />
-          )
-        })
-      }
+      {/* Show message if no todos, otherwise map through and show them */}
+      {!props.todos.length ? (
+        "No tasks yet!"
+      ) : (
+        props.todos.map(todo => (
+          <TodoItem 
+            key={todo.sno}
+            todo={todo}
+            onDelete={props.onDelete}
+            onToggle={props.onToggle}
+          />
+        ))
+      )}
     </div>
   )
 }

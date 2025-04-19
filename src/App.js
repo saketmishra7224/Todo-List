@@ -1,94 +1,87 @@
-import './App.css';
-import Header from './MyComponents/Header';
-import { Todos } from './MyComponents/Todos';
-import { Footer } from './MyComponents/Footer';
-import { AddTodo } from './MyComponents/AddTodo';
-import { About } from "./MyComponents/About";
-import React, { useState, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
+import './App.css'
+import Header from './MyComponents/Header'
+import { Todos } from './MyComponents/Todos'
+import { Footer } from './MyComponents/Footer'
+import { AddTodo } from './MyComponents/AddTodo'
+import { About } from "./MyComponents/About"
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-// The brain of our todo app - handles everything
+// Main app component that handles the todo list functionality
 function App() {
-  // Load saved todos or start fresh
-  let initTodo;
-  if (localStorage.getItem("todos") === null) {
-    initTodo = [];
-  }
-  else {
-    initTodo = JSON.parse(localStorage.getItem("todos"));
+  // Try to load saved todos from browser storage, or start with empty list
+  let initTodo = []
+  if (localStorage.getItem("todos")) {
+    initTodo = JSON.parse(localStorage.getItem("todos"))
   }
 
-  // Keep track of our todos and search stuff
+  // Set up our main todos state and search functionality
   const [todos, setTodos] = useState(initTodo.map((todo, index) => ({
     ...todo,
-    originalPosition: todo.originalPosition ?? index // Remember where each todo started
-  })));
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
+    originalPosition: todo.originalPosition ?? index
+  })))
+  const [searchQuery, setSearchQuery] = useState("")
+  const [isSearching, setIsSearching] = useState(false)
 
-  // Delete a todo
-  const onDelete = (todo) => {
-    setTodos(todos.filter((e) => {
-      return e !== todo;
-    }));
-    localStorage.getItem("todos", JSON.stringify(todos));
+  // Remove a todo from the list
+  function onDelete(todo) {
+    setTodos(todos.filter(t => t !== todo))
+    localStorage.getItem("todos", JSON.stringify(todos))
   }
 
-  // Mark todo as done/not done
-  const toggleComplete = (todo) => {
-    const updatedTodos = todos.map((t) => {
+  // Mark a todo as complete/incomplete and sort the list
+  function toggleComplete(todo) {
+    // First update the todo's completed status
+    const updated = todos.map(t => {
       if (t.sno === todo.sno) {
-        return { ...t, completed: !t.completed };
+        return { ...t, completed: !t.completed }
       }
-      return t;
-    });
+      return t
+    })
     
-    // Done todos go to bottom, keep others in order
-    const sortedTodos = [...updatedTodos].sort((a, b) => {
+    // Then sort so completed items go to bottom
+    const sorted = [...updated].sort((a, b) => {
       if (a.completed === b.completed) {
-        return a.originalPosition - b.originalPosition;
+        return a.originalPosition - b.originalPosition
       }
-      return a.completed ? 1 : -1;
-    });
+      return a.completed ? 1 : -1
+    })
     
-    setTodos(sortedTodos);
+    setTodos(sorted)
   }
 
-  // Look for specific todos
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    setIsSearching(true);
-  };
+  // Handle search functionality
+  function handleSearch(query) {
+    setSearchQuery(query)
+    setIsSearching(true)
+  }
 
-  // Show matching todos while searching
+  // Filter todos based on search query
   const filteredTodos = isSearching 
-    ? todos.filter(todo => 
-        todo.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        todo.desc.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : todos;
+    ? todos.filter(todo => {
+        const q = searchQuery.toLowerCase()
+        return todo.title.toLowerCase().includes(q) ||
+               todo.desc.toLowerCase().includes(q)
+      })
+    : todos
 
-  // Add a new todo
-  const addTodo = (title, desc) => {
-    let sno = todos.length === 0 ? 0 : todos[todos.length - 1].sno + 1;
+  // Add a new todo to the list
+  function addTodo(title, desc) {
+    const sno = todos.length ? todos[todos.length - 1].sno + 1 : 0
     
-    const myTodo = {
-      sno: sno,
-      title: title,
-      desc: desc,
+    const todo = {
+      sno,
+      title,
+      desc,
       completed: false,
       originalPosition: todos.length
     }
-    setTodos([...todos, myTodo]);
+    setTodos([...todos, todo])
   }
 
-  // Save todos when they change
+  // Save todos to browser storage whenever they change
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos))
   }, [todos])
 
   return (
@@ -101,20 +94,22 @@ function App() {
           setIsSearching={setIsSearching}
         />
         <Routes>
-          {/* Home page */}
           <Route exact path="/" element={
             <>
               <AddTodo addTodo={addTodo} />
-              <Todos todos={filteredTodos} onDelete={onDelete} onToggle={toggleComplete} />
+              <Todos 
+                todos={filteredTodos} 
+                onDelete={onDelete} 
+                onToggle={toggleComplete} 
+              />
             </>
           } />
-          {/* About page */}
           <Route exact path="/about" element={<About />} />
         </Routes>
         <Footer />
       </Router>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,19 +1,35 @@
 import React from 'react'
 
-// About page info
-export const About = () => {
+// About page component with app info and features
+export function About() {
     return (
         <div className="container my-3">
-            <h3>About Todo List</h3>
-            <p>Hey there! This is a simple todo app to help you stay organized.</p>
-            <p>Here's what you can do:</p>
-            <ul>
-                <li>Add tasks you need to get done</li>
-                <li>Mark tasks as complete when you finish them</li>
-                <li>Search for specific tasks when your list gets long</li>
-                <li>Remove tasks you don't need anymore</li>
-            </ul>
-            <p>Your tasks are saved automatically, so they'll be here next time you visit!</p>
+            {/* App description */}
+            <h3>Todo List App</h3>
+            <p>
+                A simple but effective way to keep track of your tasks.
+                Add what you need to do, check them off as you go, 
+                and remove them when done.
+            </p>
+
+            {/* Feature list */}
+            <div className="my-4">
+                <h5>What you can do:</h5>
+                <ul>
+                    <li>Add and organize tasks</li>
+                    <li>Mark tasks as complete</li>
+                    <li>Remove finished tasks</li>
+                    <li>Find tasks with search</li>
+                    <li>Your tasks save automatically</li>
+                </ul>
+            </div>
+
+            {/* Tech stack info */}
+            <div className="mt-4">
+                <p className="text-muted mb-0">
+                    Built with React and Bootstrap
+                </p>
+            </div>
         </div>
     )
 }
