@@ -20,14 +20,14 @@ export function About() {
                     <li>Mark tasks as complete</li>
                     <li>Remove finished tasks</li>
                     <li>Find tasks with search</li>
-                    <li>Your tasks save automatically</li>
+                    <li>Your tasks save automatically in the list</li>
                 </ul>
             </div>
 
             {/* Tech stack info */}
             <div className="mt-4">
                 <p className="text-muted mb-0">
-                    Built with React and Bootstrap
+                    Built using React and Bootstrap
                 </p>
             </div>
         </div>
