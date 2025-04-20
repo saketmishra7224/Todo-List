@@ -8,13 +8,13 @@ export default function Header(props) {
     const [searchText, setSearchText] = useState("")
 
     // Handle search form submission
-    const handleSearchSubmit = (e) => {
+    const handleSearchSubmit = (e) =>{
         e.preventDefault()
         props.onSearch(searchText)
     }
 
     // Update search as user types and clear search when empty
-    const handleSearchChange = (e) => {
+    const handleSearchChange = (e) =>{
         setSearchText(e.target.value)
         if (e.target.value === "") {
             props.setIsSearching(false)
@@ -69,13 +69,13 @@ export default function Header(props) {
 }
 
 // Default values for props
-Header.defaultProps = {
+Header.defaultProps ={
     title: "Your Title Here",
     searchBar: true
 }
 
 // Type checking for props
-Header.propTypes = {
+Header.propTypes ={
     title: PropTypes.string,
     searchBar: PropTypes.bool.isRequired,
     onSearch: PropTypes.func,
