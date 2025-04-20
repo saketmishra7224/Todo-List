@@ -14,7 +14,7 @@ export default function Header(props) {
     }
 
     // Update search as user types and clear search when empty
-    const handleSearchChange = (e) =>{
+    const handleSearchChange = (e) => {
         setSearchText(e.target.value)
         if (e.target.value === "") {
             props.setIsSearching(false)
