@@ -32,7 +32,7 @@ function App(){
   // Mark a todo as complete/incomplete and sort the list
   function toggleComplete(todo){
     // First update the todo's completed status
-    const updated = todos.map(t =>{
+    const updated = todos.map(t => {
       if (t.sno === todo.sno) {
         return { ...t, completed: !t.completed }
       }
@@ -40,7 +40,7 @@ function App(){
     })
     
     // Then sort so completed items go to bottom
-    const sorted = [...updated].sort((a, b) =>{
+    const sorted = [...updated].sort((a, b) => {
       if (a.completed === b.completed) {
         return a.originalPosition - b.originalPosition
       }
@@ -51,7 +51,7 @@ function App(){
   }
 
   // Handle search functionality
-  function handleSearch(query){
+  function handleSearch(query) {
     setSearchQuery(query)
     setIsSearching(true)
   }
