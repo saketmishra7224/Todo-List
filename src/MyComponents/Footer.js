@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Footer component fixed at bottom of page
+// Footer component fixed at bottom of the page
 export function Footer() {
     // Style for fixed positioning and red border
     const footerStyle = {

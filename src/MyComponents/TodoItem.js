@@ -35,7 +35,7 @@ export const TodoItem = ({ todo, onDelete, onToggle }) => {
           Delete
         </button>
       </div>
-      <hr />
+      <hr/>
     </>
   )
 }
