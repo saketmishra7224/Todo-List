@@ -8,15 +8,15 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 // Main app component that handles the todo list functionality
-function App() {
+function App(){
   // Try to load saved todos from browser storage, or start with empty list
   let initTodo = []
-  if (localStorage.getItem("todos")) {
+  if (localStorage.getItem("todos")){
     initTodo = JSON.parse(localStorage.getItem("todos"))
   }
 
   // Set up our main todos state and search functionality
-  const [todos, setTodos] = useState(initTodo.map((todo, index) => ({
+  const [todos, setTodos] = useState(initTodo.map((todo, index) =>({
     ...todo,
     originalPosition: todo.originalPosition ?? index
   })))
@@ -30,9 +30,9 @@ function App() {
   }
 
   // Mark a todo as complete/incomplete and sort the list
-  function toggleComplete(todo) {
+  function toggleComplete(todo){
     // First update the todo's completed status
-    const updated = todos.map(t => {
+    const updated = todos.map(t =>{
       if (t.sno === todo.sno) {
         return { ...t, completed: !t.completed }
       }
@@ -40,7 +40,7 @@ function App() {
     })
     
     // Then sort so completed items go to bottom
-    const sorted = [...updated].sort((a, b) => {
+    const sorted = [...updated].sort((a, b) =>{
       if (a.completed === b.completed) {
         return a.originalPosition - b.originalPosition
       }
@@ -51,7 +51,7 @@ function App() {
   }
 
   // Handle search functionality
-  function handleSearch(query) {
+  function handleSearch(query){
     setSearchQuery(query)
     setIsSearching(true)
   }
@@ -66,7 +66,7 @@ function App() {
     : todos
 
   // Add a new todo to the list
-  function addTodo(title, desc) {
+  function addTodo(title, desc){
     const sno = todos.length ? todos[todos.length - 1].sno + 1 : 0
     
     const todo = {
@@ -80,7 +80,7 @@ function App() {
   }
 
   // Save todos to browser storage whenever they change
-  useEffect(() => {
+  useEffect(() =>{
     localStorage.setItem("todos", JSON.stringify(todos))
   }, [todos])
 
